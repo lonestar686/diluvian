@@ -11,6 +11,9 @@ import itertools
 import logging
 import random
 
+# for debugging
+logging.basicConfig(level=logging.DEBUG)
+
 import matplotlib as mpl
 # Use the 'Agg' backend to allow the generation of plots even if no X server
 # is available. The matplotlib backend must be set before importing pyplot.
@@ -523,12 +526,15 @@ def build_training_gen(training_volumes):
         single_vol = six.next(six.itervalues(training_volumes))
         training_volumes = {'dupe {}'.format(n): single_vol for n in range(CONFIG.training.num_workers)}
 
+    logging.debug('# of training volumes: %s', len(training_volumes))
+
     training_gens = [
             augment_subvolume_generator(
                     preprocess_subvolume_generator(
                             v.subvolume_generator(shape=CONFIG.model.training_subv_shape,
                                                   label_margin=output_margin)))
             for v in six.itervalues(training_volumes)]
+    logging.debug('# of training generators: %s, subvolume shape: %s', len(training_gens), CONFIG.model.training_subv_shape)
     random.shuffle(training_gens)
 
     # Divide training generators up for workers.
@@ -549,6 +555,7 @@ def build_training_gen(training_volumes):
             f_a_bins=CONFIG.training.fill_factor_bins,
             reset_generators=CONFIG.training.reset_generators)
             for i, (gen, kludge) in enumerate(zip(worker_gens, kludges))]
+    logging.debug('# of training data: %s', len(training_data))
     training_reset_callback = GeneratorReset(training_data)
     callbacks = [training_reset_callback]
 

@@ -618,7 +618,9 @@ def view_volumes(volumes, partition=False):
         resolution = list(np.flipud(volume.resolution))
         offset = getattr(volume, 'bounds', [np.zeros(3, dtype=np.int32)])[0]
         offset = np.flipud(-offset)
-
+        #
+        logging.debug(' volume name: %s, resolution: %s, offset: %s', volume_name, resolution, offset)
+        
         viewer.add(volume.image_data,
                    name='{} (Image)'.format(volume_name),
                    voxel_size=resolution,
