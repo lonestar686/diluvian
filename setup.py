@@ -21,12 +21,12 @@ with open('HISTORY.rst') as history_file:
 
 parsed_requirements = parse_requirements(
     'requirements/prod.txt',
-    session=pip.download.PipSession()
+    session=pip._internal.download.PipSession()
 )
 
 parsed_test_requirements = parse_requirements(
     'requirements/test.txt',
-    session=pip.download.PipSession()
+    session=pip._internal.download.PipSession()
 )
 
 
