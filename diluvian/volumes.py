@@ -50,8 +50,10 @@ def partition_volumes(volumes, downsample=True):
     def apply_partitioning(volumes, partitioning):
         partitioned = {}
         for name, vol in six.iteritems(volumes):
+            print('volume name', name)
             partitions = [p for rgx, p in CONFIG.training.partitions.items() if re.match(rgx, name)]
             partition_index = [idx for rgx, idx in partitioning.items() if re.match(rgx, name)]
+            print('partitions:', partitions, ' index:', partition_index)
             if len(partitions) > 1 or len(partition_index) > 1:
                 raise ValueError('Volume "{}" matches more than one partition specifier'.format(name))
             elif len(partitions) == 1 and len(partition_index) == 1:
@@ -890,6 +892,9 @@ class PartitionedVolume(VolumeView):
         partition_shape = np.floor_divide(np.array(self.parent.shape), self.partitioning)
         self.bounds = ((np.multiply(partition_shape, self.partition_index)).astype(np.int64),
                        (np.multiply(partition_shape, self.partition_index + 1)).astype(np.int64))
+        print(' partitioning: ', self.partitioning, ' partition index: ', self.partition_index)
+        print(' parent shape: ', self.parent.shape, ' partition shape: ', partition_shape)
+        print(' bounds: ', self.bounds)
 
     def parent_coord_to_world(self, a):
         return a - self.bounds[0]
