@@ -10,3 +10,4 @@ scipy
 six
 tqdm
 tensorflow
+neuroglancer==0.0.8
