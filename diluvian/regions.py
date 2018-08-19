@@ -6,12 +6,12 @@ from __future__ import division
 import itertools
 # itertools.ifilter is replaced by Python 3's builtin filter
 # https://stackoverflow.com/questions/33715579/python-3-module-itertools-has-no-attribute-ifilter
-try:
-    # Python 2
-    from future_builtins import filter, map
-except ImportError:
-    # Python 3
-    pass
+# try:
+#     # Python 2
+#     from future_builtins import filter, map
+# except ImportError:
+#     # Python 3
+#     pass
 
 import logging
 
