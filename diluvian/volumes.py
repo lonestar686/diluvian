@@ -1035,7 +1035,7 @@ class HDF5Volume(Volume):
     """
     @staticmethod
     def from_toml(filename):
-        from keras.utils.data_utils import get_file
+        from tensorflow.keras.utils import get_file
 
         volumes = {}
         with open(filename, 'rb') as fin:
