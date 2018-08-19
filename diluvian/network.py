@@ -9,7 +9,7 @@ import inspect
 import numpy as np
 import six
 
-from keras.layers import (
+from tensorflow.keras.layers import (
         BatchNormalization,
         Conv3D,
         Conv3DTranspose,
@@ -19,14 +19,14 @@ from keras.layers import (
         Lambda,
         Permute,
         )
-from keras.layers.merge import (
+from tensorflow.keras.layers import (
         add,
         concatenate,
         )
-from keras.layers.core import Activation
-from keras.models import load_model as keras_load_model, Model
-from keras.utils import multi_gpu_model
-import keras.optimizers
+from tensorflow.keras.layers import Activation
+from tensorflow.keras.models import load_model as keras_load_model, Model
+from tensorflow.keras.utils import multi_gpu_model
+from tensorflow.keras import optimizers
 
 
 def make_flood_fill_network(input_fov_shape, output_fov_shape, network_config):
@@ -227,7 +227,7 @@ def add_unet_layer(model, network_config, remaining_layers, output_shape, n_chan
 
 
 def compile_network(model, optimizer_config):
-    optimizer_klass = getattr(keras.optimizers, optimizer_config.klass)
+    optimizer_klass = getattr(optimizers, optimizer_config.klass)
     optimizer_kwargs = inspect.getargspec(optimizer_klass.__init__)[0]
     optimizer_kwargs = {k: v for k, v in six.iteritems(optimizer_config.__dict__) if k in optimizer_kwargs}
     optimizer = optimizer_klass(**optimizer_kwargs)

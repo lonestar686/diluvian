@@ -25,8 +25,8 @@ from six.moves import range as xrange
 import tensorflow as tf
 from tqdm import tqdm
 
-import keras.backend as K
-from keras.callbacks import (
+import tensorflow.keras.backend as K
+from tensorflow.keras.callbacks import (
         Callback,
         EarlyStopping,
         ModelCheckpoint,
